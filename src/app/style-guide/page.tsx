@@ -6,6 +6,7 @@ import {
   spacingTokens,
   typographyTokens,
 } from '@/lib/design-tokens';
+import FontComparison from './FontComparison';
 
 const StyleGuidePage = () => {
   return (
@@ -76,6 +77,10 @@ const StyleGuidePage = () => {
             </div>
           ))}
         </div>
+      </TokenSection>
+
+      <TokenSection title="Font comparison">
+        <FontComparison />
       </TokenSection>
     </main>
   );

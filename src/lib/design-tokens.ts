@@ -56,3 +56,34 @@ export const shadowTokens = [
   { name: 'lg', className: 'shadow-lg' },
   { name: 'xl', className: 'shadow-xl' },
 ] as const;
+
+export interface FontOption {
+  name: string;
+  variable: string;
+  vibe: string;
+}
+
+export const fontOptions: readonly FontOption[] = [
+  { name: 'Inter', variable: 'var(--font-inter)', vibe: 'Neutral, ubiquitous, safe' },
+  {
+    name: 'Geist',
+    variable: 'var(--font-geist)',
+    vibe: 'Modern, technical, Vercel-esque',
+  },
+  {
+    name: 'Sora',
+    variable: 'var(--font-sora)',
+    vibe: 'Geometric, slightly bold/confident',
+  },
+  { name: 'Manrope', variable: 'var(--font-manrope)', vibe: 'Warm, rounded, friendly' },
+  {
+    name: 'Plus Jakarta Sans',
+    variable: 'var(--font-jakarta)',
+    vibe: 'Clean, distinctive without being loud',
+  },
+  {
+    name: 'DM Sans',
+    variable: 'var(--font-dm-sans)',
+    vibe: 'Compact, calm, understated',
+  },
+] as const;
