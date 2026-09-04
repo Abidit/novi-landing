@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import type { Feature } from '@/lib/content';
 
-export function FeatureCard({ icon: Icon, title, description }: Feature) {
+export const FeatureCard = ({ icon: Icon, title, description }: Feature) => {
   return (
     <motion.div
       variants={{
@@ -25,4 +25,4 @@ export function FeatureCard({ icon: Icon, title, description }: Feature) {
       </p>
     </motion.div>
   );
-}
+};

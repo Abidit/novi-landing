@@ -11,7 +11,7 @@ const container = {
   },
 };
 
-export function FeatureSection() {
+export const FeatureSection = () => {
   return (
     <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24 lg:px-8">
       <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
@@ -36,4 +36,4 @@ export function FeatureSection() {
       </motion.div>
     </section>
   );
-}
+};

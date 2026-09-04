@@ -1,8 +1,11 @@
-import type { LucideIcon } from 'lucide-react';
-import { LayoutGrid, MessageSquareText, CalendarClock, RefreshCw } from 'lucide-react';
+import { FaXTwitter, FaLinkedin, FaGithub } from 'react-icons/fa6';
+import type { IconType } from 'react-icons';
+import { CgLayoutGrid } from 'react-icons/cg';
+import { LuCalendarClock, LuMessageSquareText } from 'react-icons/lu';
+import { FiRefreshCw } from 'react-icons/fi';
 
 export interface Feature {
-  icon: LucideIcon;
+  icon: IconType;
   title: string;
   description: string;
 }
@@ -15,23 +18,75 @@ export const featureSectionContent = {
 
 export const features: Feature[] = [
   {
-    icon: LayoutGrid,
+    icon: CgLayoutGrid,
     title: 'Boards that move at your speed',
     description: 'Plan sprints and track tasks without hunting through spreadsheets.',
   },
   {
-    icon: MessageSquareText,
+    icon: LuMessageSquareText,
     title: 'Threads, not another inbox',
     description: 'Keep project conversations attached to the work itself.',
   },
   {
-    icon: CalendarClock,
+    icon: LuCalendarClock,
     title: 'One timeline for the whole team',
     description: 'Every deadline and milestone in one shared view.',
   },
   {
-    icon: RefreshCw,
+    icon: FiRefreshCw,
     title: 'Works the way you already do',
     description: 'Import from Trello, Asana, or a spreadsheet in minutes.',
   },
 ];
+
+export interface FooterLinkGroup {
+  heading: string;
+  links: { label: string; href: string }[];
+}
+
+export const footerContent = {
+  name: 'Novi',
+  tagline: 'One calm workspace for fast-moving teams.',
+  linkGroups: [
+    {
+      heading: 'Product',
+      links: [
+        { label: 'Features', href: '#features' },
+        { label: 'Pricing', href: '#' },
+        { label: 'Integrations', href: '#' },
+        { label: 'Changelog', href: '#' },
+      ],
+    },
+    {
+      heading: 'Company',
+      links: [
+        { label: 'About', href: '#' },
+        { label: 'Careers', href: '#' },
+        { label: 'Blog', href: '#' },
+        { label: 'Contact', href: '#' },
+      ],
+    },
+    {
+      heading: 'Resources',
+      links: [
+        { label: 'Help Center', href: '#' },
+        { label: 'Guides', href: '#' },
+        { label: 'API Docs', href: '#' },
+        { label: 'Community', href: '#' },
+      ],
+    },
+    {
+      heading: 'Legal',
+      links: [
+        { label: 'Privacy', href: '#privacy' },
+        { label: 'Terms', href: '#terms' },
+        { label: 'Security', href: '#' },
+      ],
+    },
+  ] satisfies FooterLinkGroup[],
+  socials: [
+    { icon: FaXTwitter, href: '#', label: 'Twitter' },
+    { icon: FaLinkedin, href: '#', label: 'LinkedIn' },
+    { icon: FaGithub, href: '#', label: 'GitHub' },
+  ] as { icon: IconType; href: string; label: string }[],
+};
