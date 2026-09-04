@@ -4,6 +4,23 @@ import { CgLayoutGrid } from 'react-icons/cg';
 import { LuCalendarClock, LuMessageSquareText } from 'react-icons/lu';
 import { FiRefreshCw } from 'react-icons/fi';
 
+export const navContent = {
+  name: 'Novi',
+  links: [
+    { label: 'Product', href: '#features' },
+    { label: 'How it works', href: '#how-it-works' },
+    { label: 'Pricing', href: '#' },
+  ],
+};
+
+export const heroContent = {
+  headline: 'Run your team without the tab switching.',
+  subheading:
+    'Novi brings tasks, docs, and conversations into one calm workspace built for small, fast moving teams.',
+  primaryCta: 'Start free',
+  secondaryCta: 'See how it works',
+};
+
 export interface Feature {
   icon: IconType;
   title: string;
