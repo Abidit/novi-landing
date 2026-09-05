@@ -1,7 +1,13 @@
 import { FaXTwitter, FaLinkedin, FaGithub } from 'react-icons/fa6';
 import type { IconType } from 'react-icons';
 import { CgLayoutGrid } from 'react-icons/cg';
-import { LuCalendarClock, LuMessageSquareText } from 'react-icons/lu';
+import {
+  LuCalendarClock,
+  LuMessageSquareText,
+  LuInbox,
+  LuMessagesSquare,
+  LuRocket,
+} from 'react-icons/lu';
 import { FiRefreshCw } from 'react-icons/fi';
 
 export const navContent = {
@@ -55,6 +61,37 @@ export const features: Feature[] = [
     description: 'Import from Trello, Asana, or a spreadsheet in minutes.',
   },
 ];
+
+export interface HowItWorksStep {
+  icon: IconType;
+  title: string;
+  description: string;
+}
+
+export const howItWorksContent = {
+  heading: 'From idea to shipped, in one flow',
+  subheading:
+    'No context switching between steps — just one workspace that moves with the work.',
+  steps: [
+    {
+      icon: LuInbox,
+      title: 'Capture',
+      description: 'Tasks and ideas land in one board, not six different tools.',
+    },
+    {
+      icon: LuMessagesSquare,
+      title: 'Discuss',
+      description:
+        'Conversations stay attached to the work itself, not a separate inbox.',
+    },
+    {
+      icon: LuRocket,
+      title: 'Ship',
+      description:
+        'The whole team sees one timeline, so nothing falls through the cracks.',
+    },
+  ] satisfies HowItWorksStep[],
+};
 
 export const ctaContent = {
   heading: 'Get your team out of the tabs',

@@ -6,7 +6,7 @@ import { navContent } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-export function Navbar() {
+export const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +37,9 @@ export function Navbar() {
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-neutral-700 md:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-nav-panel"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700 md:hidden"
         >
           {open ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
         </button>
@@ -47,6 +49,7 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-nav-panel"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -59,12 +62,17 @@ export function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-lg px-2 py-2.5 text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                  className="flex min-h-11 items-center rounded-lg px-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
                 >
                   {link.label}
                 </a>
               ))}
-              <Button href="#" size="sm" className="mt-2 w-full">
+              <Button
+                href="#"
+                size="sm"
+                onClick={() => setOpen(false)}
+                className="mt-2 w-full"
+              >
                 Start Free
               </Button>
             </div>
@@ -73,4 +81,4 @@ export function Navbar() {
       </AnimatePresence>
     </header>
   );
-}
+};

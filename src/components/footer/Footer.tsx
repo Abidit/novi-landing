@@ -22,7 +22,7 @@ export const Footer = () => {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-700 text-neutral-400 transition-colors hover:border-indigo-500 hover:text-white"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-700 text-neutral-400 transition-colors hover:border-indigo-500 hover:text-white"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -62,14 +62,20 @@ export const Footer = () => {
 
           {/* Bottom bar */}
           <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-neutral-800 pt-8 pb-10 sm:flex-row">
-            <p className="text-xs text-neutral-500">
+            <p className="text-sm text-neutral-500">
               &copy; {year} {footerContent.name}. All rights reserved.
             </p>
-            <div className="flex gap-6 text-xs text-neutral-500">
-              <a href="#privacy" className="transition-colors hover:text-white">
+            <div className="flex gap-6 text-sm text-neutral-500">
+              <a
+                href="#privacy"
+                className="-my-3 inline-block py-3 transition-colors hover:text-white"
+              >
                 Privacy
               </a>
-              <a href="#terms" className="transition-colors hover:text-white">
+              <a
+                href="#terms"
+                className="-my-3 inline-block py-3 transition-colors hover:text-white"
+              >
                 Terms
               </a>
             </div>

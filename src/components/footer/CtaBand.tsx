@@ -22,7 +22,7 @@ export const CtaBand = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.4 }}
-        className="mx-auto max-w-6xl px-6 py-16 text-center sm:py-20 lg:px-8"
+        className="mx-auto max-w-6xl px-6 py-20 text-center sm:py-24 lg:px-8"
       >
         <motion.h2
           variants={item}
@@ -33,7 +33,7 @@ export const CtaBand = () => {
         <motion.div variants={item} className="mx-auto mt-8 flex max-w-md justify-center">
           <NewsletterForm />
         </motion.div>
-        <motion.p variants={item} className="mt-4 text-xs text-neutral-500">
+        <motion.p variants={item} className="mt-4 text-sm text-neutral-500">
           {ctaContent.disclaimer}
         </motion.p>
       </motion.div>

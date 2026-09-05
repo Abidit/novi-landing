@@ -15,9 +15,9 @@ const item: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
-export function Hero() {
+export const Hero = () => {
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24">
+    <section className="mx-auto max-w-6xl overflow-x-clip px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24">
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         <motion.div
           variants={container}
@@ -56,4 +56,4 @@ export function Hero() {
       </div>
     </section>
   );
-}
+};

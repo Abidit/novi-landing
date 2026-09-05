@@ -31,12 +31,12 @@ export const NewsletterForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@company.com"
         disabled={submitted}
-        className="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 transition-colors outline-none focus:border-indigo-500 disabled:opacity-60"
+        className="h-11 w-full rounded-lg border border-neutral-300 bg-white px-4 text-sm text-neutral-900 placeholder-neutral-400 transition-colors outline-none focus:border-indigo-500 disabled:opacity-60"
       />
       <button
         type="submit"
         disabled={submitted}
-        className="flex h-[42px] shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-90"
+        className="flex h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-90"
       >
         <AnimatePresence mode="wait" initial={false}>
           {submitted ? (
