@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { TokenSection } from '@/components/style-guide/TokenSection';
 import {
   colorTokens,
@@ -7,6 +8,14 @@ import {
   typographyTokens,
 } from '@/lib/design-tokens';
 import FontComparison from './FontComparison';
+
+export const metadata: Metadata = {
+  title: 'Design system',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const StyleGuidePage = () => {
   return (

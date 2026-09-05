@@ -33,7 +33,7 @@ export const Footer = () => {
             {/* Link groups */}
             {footerContent.linkGroups.map((group) => (
               <div key={group.heading}>
-                <h4 className="text-sm font-semibold text-white">{group.heading}</h4>
+                <h3 className="text-sm font-semibold text-white">{group.heading}</h3>
                 <ul className="mt-4 space-y-3">
                   {group.links.map((link) => (
                     <li key={link.label}>

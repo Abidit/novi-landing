@@ -104,7 +104,7 @@ export const FeatureShowcase = () => {
         <div
           id="feature-panel"
           role="tabpanel"
-          className="flex items-center justify-center rounded-2xl border border-neutral-100 bg-white p-6 shadow-sm sm:p-8"
+          className="flex min-h-[220px] items-center justify-center rounded-2xl border border-neutral-100 bg-white p-6 shadow-sm sm:p-8"
         >
           <div className="w-full">
             <AnimatePresence mode="wait">
