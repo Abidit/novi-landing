@@ -13,10 +13,11 @@ import { FiRefreshCw } from 'react-icons/fi';
 export const navContent = {
   name: 'Novi',
   links: [
-    { label: 'Product', href: '#features' },
     { label: 'How it works', href: '#how-it-works' },
-    { label: 'Pricing', href: '#' },
+    { label: 'Features', href: '#features' },
   ],
+  signIn: { label: 'Sign in', href: '#' },
+  cta: { label: 'Start free', href: '#' },
 };
 
 export const heroContent = {
@@ -34,7 +35,7 @@ export interface Feature {
 }
 
 export const featureSectionContent = {
-  heading: 'Everything your team needs, <br/> nothing it doesn\u2019t',
+  heading: 'Everything your team needs, nothing it doesn’t',
   subheading: 'Novi brings the essentials together — less coordinating, more building.',
 };
 

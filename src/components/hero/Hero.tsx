@@ -46,7 +46,7 @@ export const Hero = () => {
         >
           <motion.h1
             variants={item}
-            className="text-3xl leading-tight font-bold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl"
+            className="text-4xl leading-tight font-bold tracking-tight text-balance text-neutral-900 sm:text-5xl lg:text-6xl"
           >
             {heroContent.headline}
           </motion.h1>

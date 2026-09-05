@@ -1,84 +1,144 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence } from 'framer-motion';
+import { FiMenu } from 'react-icons/fi';
 import { navContent } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { MobileMenuOverlay } from './MobileMenuOverlay';
+import { NavLogo } from './NavLogo';
+import { SignInLink } from './SignInLink';
+
+const SCROLL_THRESHOLD = 80;
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+    }
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    // `overflow: hidden` alone doesn't stop touch-drag rubber-band scrolling
+    // on mobile Safari/Chrome, so pin the body in place and restore the
+    // scroll position on close.
+    const scrollY = window.scrollY;
+    const { body } = document;
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.overflow = 'hidden';
+
+    return () => {
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.overflow = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) {
+      wasOpenRef.current = true;
+    } else if (wasOpenRef.current) {
+      wasOpenRef.current = false;
+      triggerRef.current?.focus();
+    }
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-100 bg-white/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
-        <span className="text-lg font-bold text-neutral-900">{navContent.name}</span>
-
-        {/* Desktop links */}
-        <div className="hidden items-center gap-8 md:flex">
-          {navContent.links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        <div className="hidden md:block">
-          <Button href="#" size="sm">
-            Start Free
-          </Button>
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          aria-controls="mobile-nav-panel"
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700 md:hidden"
-        >
-          {open ? <FiX className="h-5 w-5" /> : <FiMenu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      {/* Mobile slide-in panel */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-nav-panel"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-neutral-100 md:hidden"
-          >
-            <div className="flex flex-col gap-1 px-6 py-4">
+    <header
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        isScrolled
+          ? 'border-neutral-200 bg-white/90 shadow-sm backdrop-blur-md'
+          : 'border-transparent bg-transparent'
+      }`}
+    >
+      <div className="mx-auto max-w-6xl px-6 py-4 lg:px-8">
+        {/* Desktop pill nav */}
+        <div className="hidden items-center justify-between md:flex">
+          <div className="flex items-center gap-6 rounded-full border border-neutral-200 py-2 pr-2 pl-5">
+            <NavLogo />
+            <span aria-hidden="true" className="h-5 w-px bg-neutral-200" />
+            <div className="flex items-center gap-6">
               {navContent.links.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="flex min-h-11 items-center rounded-lg px-2 text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                  className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
                 >
                   {link.label}
                 </a>
               ))}
-              <Button
-                href="#"
-                size="sm"
-                onClick={() => setOpen(false)}
-                className="mt-2 w-full"
-              >
-                Start Free
-              </Button>
             </div>
-          </motion.div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <SignInLink />
+            <Button href={navContent.cta.href} size="sm">
+              {navContent.cta.label}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile collapsed bar */}
+        <div className="flex items-center justify-between rounded-2xl border border-neutral-200 px-4 py-3 md:hidden">
+          <NavLogo />
+          <button
+            ref={triggerRef}
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-nav-overlay"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700"
+          >
+            <FiMenu className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {/*
+        Portaled to document.body: once scrolled, the header gains
+        `backdrop-blur-md` (backdrop-filter), which establishes a containing
+        block for `position: fixed` descendants. Left in place, the overlay
+        would be positioned relative to the header's box in the document
+        flow instead of the viewport, so it'd scroll out of view with the
+        page.
+      */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {open && <MobileMenuOverlay onClose={() => setOpen(false)} />}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </header>
   );
 };

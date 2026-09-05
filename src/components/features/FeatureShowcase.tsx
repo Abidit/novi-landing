@@ -41,7 +41,7 @@ export const FeatureShowcase = () => {
   return (
     <section
       id="features"
-      className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 sm:py-24 lg:px-8"
+      className="mx-auto max-w-6xl scroll-mt-28 px-6 py-20 sm:py-24 md:scroll-mt-20 lg:px-8"
     >
       <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
         <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl lg:text-4xl">

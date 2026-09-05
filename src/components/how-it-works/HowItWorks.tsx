@@ -21,7 +21,7 @@ export const HowItWorks = () => {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <section id="how-it-works" className={`scroll-mt-20 ${surfaceTint}`}>
+    <section id="how-it-works" className={`scroll-mt-28 md:scroll-mt-20 ${surfaceTint}`}>
       <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl lg:text-4xl">
