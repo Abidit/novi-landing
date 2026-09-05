@@ -29,12 +29,12 @@ export const FeatureShowcase = () => {
     return () => clearTimeout(timeoutRef.current);
   }, [active, prefersReducedMotion]);
 
-  function handleSelect(i: number) {
+  const handleSelect = (i: number) => {
     if (i === active) return;
     clearTimeout(timeoutRef.current);
     setActive(i);
     setProgressKey((k) => k + 1);
-  }
+  };
 
   const ActiveDemo = demos[active];
 

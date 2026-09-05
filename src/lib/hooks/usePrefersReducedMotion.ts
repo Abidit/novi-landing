@@ -2,20 +2,15 @@ import { useSyncExternalStore } from 'react';
 
 const QUERY = '(prefers-reduced-motion: reduce)';
 
-function subscribe(callback: () => void) {
+const subscribe = (callback: () => void) => {
   const query = window.matchMedia(QUERY);
   query.addEventListener('change', callback);
   return () => query.removeEventListener('change', callback);
-}
+};
 
-function getSnapshot() {
-  return window.matchMedia(QUERY).matches;
-}
+const getSnapshot = () => window.matchMedia(QUERY).matches;
 
-function getServerSnapshot() {
-  return false;
-}
+const getServerSnapshot = () => false;
 
-export function usePrefersReducedMotion() {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
+export const usePrefersReducedMotion = () =>
+  useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

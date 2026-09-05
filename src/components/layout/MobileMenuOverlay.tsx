@@ -41,7 +41,7 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
     const container = overlayRef.current;
     if (!container) return;
 
-    function handleKeyDown(e: KeyboardEvent) {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
 
       const focusables = container!.querySelectorAll<HTMLElement>(
@@ -60,13 +60,13 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
         e.preventDefault();
         first.focus();
       }
-    }
+    };
 
     container.addEventListener('keydown', handleKeyDown);
     return () => container.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  function handleLinkClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     onClose();
     // deferred a frame so the overlay's own body-scroll-lock cleanup (in
@@ -74,7 +74,7 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
     requestAnimationFrame(() => {
       document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     });
-  }
+  };
 
   return (
     <>

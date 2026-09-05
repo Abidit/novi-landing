@@ -19,9 +19,9 @@ export const Navbar = () => {
   const wasOpenRef = useRef(false);
 
   useEffect(() => {
-    function handleScroll() {
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
-    }
+    };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -55,9 +55,9 @@ export const Navbar = () => {
   useEffect(() => {
     if (!open) return;
 
-    function handleKeyDown(e: KeyboardEvent) {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
-    }
+    };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
