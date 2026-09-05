@@ -64,6 +64,23 @@ export const Navbar = () => {
   }, [open]);
 
   useEffect(() => {
+    if (!open) return;
+
+    // The overlay is portaled to <body>, so it sits visually on top of the
+    // header/main/footer but doesn't remove them from the DOM — without
+    // this, their links and buttons (e.g. this same hamburger, still
+    // labeled "Close menu" underneath the overlay) stay reachable by
+    // screen-reader browse-mode navigation, which doesn't go through the
+    // Tab-key focus trap below. `inert` removes them from the
+    // accessibility tree and tab order natively, with no per-AT reliance
+    // on `aria-modal` support.
+    const overlay = document.getElementById('mobile-nav-overlay');
+    const siblings = Array.from(document.body.children).filter((el) => el !== overlay);
+    siblings.forEach((el) => el.setAttribute('inert', ''));
+    return () => siblings.forEach((el) => el.removeAttribute('inert'));
+  }, [open]);
+
+  useEffect(() => {
     if (open) {
       wasOpenRef.current = true;
     } else if (wasOpenRef.current) {

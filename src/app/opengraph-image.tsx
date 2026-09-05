@@ -13,6 +13,33 @@ export const alt = `${SITE_NAME} — ${heroContent.headline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+// Satori (next/og's renderer) has a text-layout bug where wrapping a long
+// string via `flexWrap: 'wrap'` inserts random oversized gaps at some word
+// boundaries on the wrapped line (reproduced independently of this headline,
+// maxWidth, and letterSpacing). Pre-splitting into lines ourselves and
+// rendering each as its own non-wrapping flex row sidesteps Satori's wrap
+// measurement entirely, so this must stay derived from `heroContent.headline`
+// rather than a hardcoded string — resplit here if the headline copy changes.
+const wrapLines = (text: string, maxCharsPerLine: number): string[] => {
+  const lines: string[] = [];
+  let current = '';
+
+  for (const word of text.split(' ')) {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxCharsPerLine && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  }
+  if (current) lines.push(current);
+
+  return lines;
+};
+
+const headlineLines = wrapLines(heroContent.headline, 24);
+
 const Image = async () => {
   return new ImageResponse(
     <div
@@ -42,15 +69,19 @@ const Image = async () => {
       <div
         style={{
           display: 'flex',
+          flexDirection: 'column',
           fontSize: 64,
           fontWeight: 800,
           lineHeight: 1.15,
           letterSpacing: '-0.02em',
           color: 'white',
-          maxWidth: 920,
         }}
       >
-        {heroContent.headline}
+        {headlineLines.map((line) => (
+          <div key={line} style={{ display: 'flex' }}>
+            {line}
+          </div>
+        ))}
       </div>
     </div>,
     { ...size },
