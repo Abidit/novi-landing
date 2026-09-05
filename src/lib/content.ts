@@ -56,6 +56,12 @@ export const features: Feature[] = [
   },
 ];
 
+export const ctaContent = {
+  heading: 'Get your team out of the tabs',
+  cta: 'Start free',
+  disclaimer: 'No credit card required. Cancel anytime.',
+};
+
 export interface FooterLinkGroup {
   heading: string;
   links: { label: string; href: string }[];

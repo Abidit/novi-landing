@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowRight, FiCheck } from 'react-icons/fi';
+import { ctaContent } from '@/lib/content';
 
 export const NewsletterForm = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,10 @@ export const NewsletterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full max-w-sm gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full max-w-md flex-col gap-3 sm:flex-row"
+    >
       <input
         type="email"
         required
@@ -27,12 +31,12 @@ export const NewsletterForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@company.com"
         disabled={submitted}
-        className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-2.5 text-sm text-white placeholder-neutral-500 transition-colors outline-none focus:border-indigo-500 disabled:opacity-60"
+        className="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 transition-colors outline-none focus:border-indigo-500 disabled:opacity-60"
       />
       <button
         type="submit"
         disabled={submitted}
-        className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white transition-colors hover:bg-indigo-500 disabled:opacity-90"
+        className="flex h-[42px] shrink-0 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-90"
       >
         <AnimatePresence mode="wait" initial={false}>
           {submitted ? (
@@ -42,17 +46,21 @@ export const NewsletterForm = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ duration: 0.2 }}
+              className="flex items-center gap-2"
             >
               <FiCheck className="h-4 w-4" />
+              You&apos;re in
             </motion.span>
           ) : (
             <motion.span
-              key="arrow"
+              key="cta"
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ duration: 0.2 }}
+              className="flex items-center gap-2"
             >
+              {ctaContent.cta}
               <FiArrowRight className="h-4 w-4" />
             </motion.span>
           )}
