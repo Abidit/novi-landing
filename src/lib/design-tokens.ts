@@ -1,3 +1,20 @@
+// Shared "calm pause" section background — used by HowItWorks and the footer
+// CTA band so the two sections read as the same tint family instead of
+// drifting apart if edited independently.
+export const surfaceTint = 'bg-indigo-50';
+
+// Hero decorative background — faint dot-grid masked to an upper-right
+// ellipse, plus a soft off-center glow. Shared between Hero.tsx and the
+// style guide swatch so the reference stays truthful to the real thing.
+export const heroBackgroundTokens = {
+  dotGrid: {
+    backgroundImage: 'radial-gradient(circle, #d4d4d4 1px, transparent 1px)',
+    backgroundSize: '18px 18px',
+    maskImage: 'radial-gradient(ellipse 62% 58% at 58% 30%, black 0%, transparent 75%)',
+  },
+  glow: 'bg-indigo-300/60',
+} as const;
+
 export const colorTokens = {
   primary: [
     { name: '50', value: 'bg-indigo-50' },
@@ -19,6 +36,7 @@ export const colorTokens = {
     { name: 'neutral-700', value: 'bg-neutral-700' },
     { name: 'neutral-900', value: 'bg-neutral-900' },
   ],
+  surface: [{ name: 'surface-tint', value: surfaceTint }],
 } as const;
 
 export const typographyTokens = [

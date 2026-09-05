@@ -3,6 +3,7 @@
 import { motion, type Variants } from 'framer-motion';
 import { heroContent } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
+import { heroBackgroundTokens } from '@/lib/design-tokens';
 import { HeroGraphic } from './HeroGraphic';
 
 const container: Variants = {
@@ -17,7 +18,25 @@ const item: Variants = {
 
 export const Hero = () => {
   return (
-    <section className="mx-auto max-w-6xl overflow-x-clip px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24">
+    <section className="relative mx-auto max-w-6xl overflow-x-clip px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: heroBackgroundTokens.dotGrid.backgroundImage,
+            backgroundSize: heroBackgroundTokens.dotGrid.backgroundSize,
+            maskImage: heroBackgroundTokens.dotGrid.maskImage,
+            WebkitMaskImage: heroBackgroundTokens.dotGrid.maskImage,
+          }}
+        />
+        <div
+          className={`absolute top-0 right-0 h-44 w-44 rounded-full blur-3xl sm:top-6 sm:right-12 ${heroBackgroundTokens.glow}`}
+        />
+      </div>
+
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         <motion.div
           variants={container}

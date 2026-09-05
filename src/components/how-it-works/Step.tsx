@@ -29,7 +29,7 @@ export const Step = ({ step, threshold, scrollYProgress, forceActive }: StepProp
     <div className="relative flex gap-5 pb-10 last:pb-0">
       <span
         className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
-          isActive ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-600'
+          isActive ? 'bg-indigo-600 text-white' : 'bg-white text-indigo-600'
         }`}
       >
         <step.icon className="h-4 w-4" strokeWidth={2} />

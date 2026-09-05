@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from 'framer-motion';
 import { ctaContent } from '@/lib/content';
+import { surfaceTint } from '@/lib/design-tokens';
 import { NewsletterForm } from './NewsletterForm';
 
 const container: Variants = {
@@ -16,7 +17,7 @@ const item: Variants = {
 
 export const CtaBand = () => {
   return (
-    <section className="bg-indigo-50">
+    <section className={surfaceTint}>
       <motion.div
         variants={container}
         initial="hidden"

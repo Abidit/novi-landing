@@ -63,10 +63,10 @@ export const FeatureShowcase = () => {
                 aria-selected={isActive}
                 aria-controls="feature-panel"
                 onClick={() => handleSelect(i)}
-                className={`relative overflow-hidden rounded-xl border p-4 text-left transition-colors sm:p-5 ${
+                className={`relative overflow-hidden rounded-xl border p-4 text-left shadow-sm transition-colors sm:p-5 ${
                   isActive
                     ? 'border-indigo-200 bg-indigo-50/60'
-                    : 'border-neutral-100 hover:bg-neutral-50'
+                    : 'border-neutral-200 bg-white hover:bg-neutral-50'
                 }`}
               >
                 <div className="flex items-start gap-3">

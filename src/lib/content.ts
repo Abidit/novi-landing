@@ -34,7 +34,7 @@ export interface Feature {
 }
 
 export const featureSectionContent = {
-  heading: 'Everything your team needs, nothing it doesn\u2019t',
+  heading: 'Everything your team needs, <br/> nothing it doesn\u2019t',
   subheading: 'Novi brings the essentials together — less coordinating, more building.',
 };
 

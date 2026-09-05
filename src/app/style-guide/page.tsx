@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { TokenSection } from '@/components/style-guide/TokenSection';
 import {
   colorTokens,
+  heroBackgroundTokens,
   radiusTokens,
   shadowTokens,
   spacingTokens,
+  surfaceTint,
   typographyTokens,
 } from '@/lib/design-tokens';
 import FontComparison from './FontComparison';
@@ -85,6 +87,41 @@ const StyleGuidePage = () => {
               <span className="text-xs text-neutral-500">{s.name}</span>
             </div>
           ))}
+        </div>
+      </TokenSection>
+
+      <TokenSection title="Background treatments">
+        <div className="flex flex-wrap gap-6">
+          <div className="flex flex-col items-center gap-2">
+            <div
+              className={`h-24 w-40 rounded-lg border border-neutral-200 ${surfaceTint}`}
+            />
+            <span className="text-xs text-neutral-500">surface-tint (section bg)</span>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <div className="relative h-24 w-40 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+              <div
+                className="absolute inset-0 opacity-40"
+                style={{
+                  backgroundImage: heroBackgroundTokens.dotGrid.backgroundImage,
+                  backgroundSize: heroBackgroundTokens.dotGrid.backgroundSize,
+                  maskImage: heroBackgroundTokens.dotGrid.maskImage,
+                  WebkitMaskImage: heroBackgroundTokens.dotGrid.maskImage,
+                }}
+              />
+            </div>
+            <span className="text-xs text-neutral-500">Hero dot-grid (masked)</span>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <div className="relative h-24 w-40 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+              <div
+                className={`absolute top-0 right-0 h-20 w-20 rounded-full blur-3xl ${heroBackgroundTokens.glow}`}
+              />
+            </div>
+            <span className="text-xs text-neutral-500">Hero glow (indigo-300/60)</span>
+          </div>
         </div>
       </TokenSection>
 
