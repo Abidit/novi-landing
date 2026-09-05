@@ -116,7 +116,7 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
             type="button"
             onClick={onClose}
             aria-label="Close menu"
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
           >
             <FiX className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -128,7 +128,7 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
               key={link.label}
               href={link.href}
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="rounded-lg px-2 py-3 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+              className="rounded-lg px-2 py-3 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-neutral-900 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
             >
               {link.label}
             </a>

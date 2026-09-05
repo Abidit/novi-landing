@@ -11,14 +11,19 @@ import {
 } from 'react-icons/lu';
 import { FiRefreshCw } from 'react-icons/fi';
 
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
 export const navContent = {
   name: 'Novi',
   links: [
     { label: 'How it works', href: '#how-it-works' },
     { label: 'Features', href: '#features' },
-  ],
-  signIn: { label: 'Sign in', href: '#' },
-  cta: { label: 'Try for FREE', href: '#' },
+  ] satisfies NavLink[],
+  signIn: { label: 'Sign in', href: '#' } satisfies NavLink,
+  cta: { label: 'Try for FREE', href: '#' } satisfies NavLink,
 };
 
 export const heroContent = {

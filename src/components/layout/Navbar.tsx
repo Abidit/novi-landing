@@ -103,17 +103,17 @@ export const Navbar = () => {
           <div className="flex items-center gap-6 rounded-full border border-neutral-200 py-2 pr-2 pl-5">
             <NavLogo />
             <span aria-hidden="true" className="h-5 w-px bg-neutral-200" />
-            <div className="flex items-center gap-6">
+            <nav aria-label="Primary" className="flex items-center gap-6">
               {navContent.links.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
+                  className="relative rounded-sm pb-0.5 text-sm font-medium text-neutral-600 transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-indigo-600 after:transition-transform after:duration-300 after:content-[''] hover:text-neutral-900 hover:after:scale-x-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:after:scale-x-100"
                 >
                   {link.label}
                 </a>
               ))}
-            </div>
+            </nav>
           </div>
 
           <div className="flex items-center gap-3">
@@ -134,7 +134,7 @@ export const Navbar = () => {
             aria-expanded={open}
             aria-controls="mobile-nav-overlay"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
           >
             <FiMenu className="h-5 w-5" aria-hidden="true" />
           </button>
