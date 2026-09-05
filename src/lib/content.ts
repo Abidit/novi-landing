@@ -35,8 +35,8 @@ export interface Feature {
 }
 
 export const featureSectionContent = {
-  heading: 'Everything your team needs, nothing it doesn’t',
-  subheading: 'Novi brings the essentials together — less coordinating, more building.',
+  heading: 'Everything your team needs',
+  subheading: 'Novi brings the essentials together: less coordinating, more building.',
 };
 
 export const features: Feature[] = [
@@ -71,7 +71,7 @@ export interface HowItWorksStep {
 export const howItWorksContent = {
   heading: 'From idea to shipped, in one flow',
   subheading:
-    'No context switching between steps — one workspace that moves with the work.',
+    'No context switching between steps: one workspace that moves with the work.',
   steps: [
     {
       icon: LuInbox,

@@ -34,7 +34,7 @@ export const ThreadsDemo = () => {
                   key={d}
                   animate={{ y: [0, -3, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity, delay: d * 0.15 }}
-                  className="h-1.5 w-1.5 rounded-full bg-indigo-400"
+                  className="h-3 w-1.5 rounded-full bg-indigo-400"
                 />
               ))}
             </motion.div>

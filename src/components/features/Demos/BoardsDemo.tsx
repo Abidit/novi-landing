@@ -24,7 +24,7 @@ export const BoardsDemo = () => {
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               className="rounded-md border border-neutral-100 bg-white p-2 text-xs font-medium text-neutral-700 shadow-sm"
             >
-              Ship onboarding flow
+              Ship auth flow
             </motion.div>
           )}
         </div>
