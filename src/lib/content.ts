@@ -7,6 +7,7 @@ import {
   LuInbox,
   LuMessagesSquare,
   LuRocket,
+  LuLightbulb,
 } from 'react-icons/lu';
 import { FiRefreshCw } from 'react-icons/fi';
 
@@ -27,6 +28,48 @@ export const heroContent = {
   primaryCta: 'Try for FREE',
   secondaryCta: 'See how it works',
 };
+
+export interface HeroPreviewTab {
+  id: string;
+  label: string;
+  icon: IconType;
+  items: { text: string; done?: boolean }[];
+}
+
+// Mock workspace states shown in the hero preview card. Illustrative product
+// flow only — no claims, metrics, or customer names.
+export const heroPreviewTabs: HeroPreviewTab[] = [
+  {
+    id: 'explore',
+    label: 'Explore ideas',
+    icon: LuLightbulb,
+    items: [
+      { text: 'Draft Q3 positioning', done: true },
+      { text: 'Collect competitor notes' },
+      { text: 'Shortlist launch bets' },
+    ],
+  },
+  {
+    id: 'discuss',
+    label: 'Discuss in thread',
+    icon: LuMessagesSquare,
+    items: [
+      { text: 'Agree on launch scope', done: true },
+      { text: 'Design review feedback' },
+      { text: 'Open questions for eng' },
+    ],
+  },
+  {
+    id: 'ship',
+    label: 'Ship code',
+    icon: LuRocket,
+    items: [
+      { text: 'Merge onboarding flow', done: true },
+      { text: 'Cut release candidate' },
+      { text: 'Deploy to production' },
+    ],
+  },
+];
 
 export interface Feature {
   icon: IconType;

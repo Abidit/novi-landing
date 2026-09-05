@@ -11,7 +11,8 @@ interface ButtonProps {
 }
 
 const variants = {
-  primary: 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-sm hover:shadow-md',
+  primary:
+    'bg-indigo-600 text-white hover:bg-indigo-500 shadow-sm shadow-indigo-500/20 hover:shadow-md',
   secondary:
     'bg-white text-neutral-900 border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50',
 };
@@ -29,7 +30,7 @@ export const Button = ({
   children,
   className = '',
 }: ButtonProps) => {
-  const classes = `inline-flex min-h-11 items-center justify-center rounded-lg font-medium transition-all duration-200 ${variants[variant]} ${sizes[size]} ${className}`;
+  const classes = `inline-flex min-h-11 items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none ${variants[variant]} ${sizes[size]} ${className}`;
 
   if (href) {
     return (

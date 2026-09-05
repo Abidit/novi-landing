@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, type Variants } from 'framer-motion';
+import { FiArrowRight, FiPlayCircle } from 'react-icons/fi';
 import { heroContent } from '@/lib/content';
 import { Button } from '@/components/ui/Button';
 import { heroBackgroundTokens } from '@/lib/design-tokens';
@@ -8,7 +9,7 @@ import { HeroGraphic } from './HeroGraphic';
 
 const container: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
 const item: Variants = {
@@ -18,7 +19,10 @@ const item: Variants = {
 
 export const Hero = () => {
   return (
-    <section className="relative mx-auto max-w-6xl overflow-x-clip px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24">
+    <section
+      aria-labelledby="hero-heading"
+      className="relative mx-auto max-w-6xl overflow-x-clip px-6 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:px-8 lg:pt-24"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -37,14 +41,15 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
         <motion.div
           variants={container}
           initial="hidden"
           animate="visible"
-          className="text-center lg:text-left"
+          className="text-center lg:col-span-7 lg:text-left"
         >
           <motion.h1
+            id="hero-heading"
             variants={item}
             className="text-4xl leading-tight font-bold tracking-tight text-balance text-neutral-900 sm:text-5xl lg:text-6xl"
           >
@@ -62,14 +67,16 @@ export const Hero = () => {
           >
             <Button href="#" size="md">
               {heroContent.primaryCta}
+              <FiArrowRight aria-hidden className="size-4 shrink-0" />
             </Button>
             <Button href="#how-it-works" variant="secondary" size="md">
+              <FiPlayCircle aria-hidden className="size-4 shrink-0" />
               {heroContent.secondaryCta}
             </Button>
           </motion.div>
         </motion.div>
 
-        <div>
+        <div className="lg:col-span-5">
           <HeroGraphic />
         </div>
       </div>
