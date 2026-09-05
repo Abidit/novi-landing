@@ -17,14 +17,14 @@ export const navContent = {
     { label: 'Features', href: '#features' },
   ],
   signIn: { label: 'Sign in', href: '#' },
-  cta: { label: 'Start free', href: '#' },
+  cta: { label: 'Try for FREE', href: '#' },
 };
 
 export const heroContent = {
   headline: 'Run your team without the tab switching',
   subheading:
     'Novi brings tasks, docs, and conversations into one calm workspace built for small, fast-moving teams.',
-  primaryCta: 'Start free',
+  primaryCta: 'Try for FREE',
   secondaryCta: 'See how it works',
 };
 
@@ -95,7 +95,7 @@ export const howItWorksContent = {
 
 export const ctaContent = {
   heading: 'Give your team one workspace',
-  cta: 'Start free',
+  cta: 'Try for FREE',
   disclaimer: 'No credit card required. Cancel anytime.',
 };
 

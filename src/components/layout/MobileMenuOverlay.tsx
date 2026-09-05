@@ -19,6 +19,11 @@ const reducedMotionVariants = {
   visible: { opacity: 1 },
 };
 
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
 interface MobileMenuOverlayProps {
   onClose: () => void;
 }
@@ -72,53 +77,71 @@ export const MobileMenuOverlay = ({ onClose }: MobileMenuOverlayProps) => {
   }
 
   return (
-    <motion.div
-      ref={overlayRef}
-      id="mobile-nav-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Main menu"
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      variants={prefersReducedMotion ? reducedMotionVariants : slideVariants}
-      transition={
-        prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: 'easeInOut' }
-      }
-      className="fixed inset-0 z-[100] flex h-dvh w-screen flex-col overflow-y-auto bg-white px-6 py-4 md:hidden"
-    >
-      <div className="flex items-center justify-between rounded-2xl border border-neutral-200 px-4 py-3">
-        <NavLogo />
-        <button
-          ref={closeButtonRef}
-          type="button"
-          onClick={onClose}
-          aria-label="Close menu"
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700"
-        >
-          <FiX className="h-5 w-5" aria-hidden="true" />
-        </button>
-      </div>
-
-      <nav className="mt-8 flex flex-col gap-2">
-        {navContent.links.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            onClick={(e) => handleLinkClick(e, link.href)}
-            className="rounded-lg px-2 py-3 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+    <>
+      {/*
+        Fades in behind the sliding panel so the collapsed nav bar softens
+        into a blur instead of being hard-clipped by the panel's edge as it
+        slides across the screen.
+      */}
+      <motion.div
+        aria-hidden="true"
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={backdropVariants}
+        transition={
+          prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: 'easeInOut' }
+        }
+        className="pointer-events-none fixed inset-0 z-[99] bg-white/40 backdrop-blur-md md:hidden"
+      />
+      <motion.div
+        ref={overlayRef}
+        id="mobile-nav-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Main menu"
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={prefersReducedMotion ? reducedMotionVariants : slideVariants}
+        transition={
+          prefersReducedMotion ? { duration: 0 } : { duration: 0.3, ease: 'easeInOut' }
+        }
+        className="fixed inset-0 z-[100] flex h-dvh w-screen flex-col overflow-y-auto bg-white px-6 py-4 md:hidden"
+      >
+        <div className="flex items-center justify-between rounded-2xl border border-neutral-200 px-4 py-3">
+          <NavLogo />
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-neutral-700"
           >
-            {link.label}
-          </a>
-        ))}
-      </nav>
+            <FiX className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
 
-      <div className="mt-auto flex flex-col gap-3 pt-8 pb-4">
-        <SignInLink onClick={onClose} className="w-full" />
-        <Button href={navContent.cta.href} onClick={onClose} className="w-full">
-          {navContent.cta.label}
-        </Button>
-      </div>
-    </motion.div>
+        <nav className="mt-8 flex flex-col gap-2">
+          {navContent.links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="rounded-lg px-2 py-3 text-lg font-medium text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="mt-auto flex flex-col gap-3 pt-8 pb-4">
+          <SignInLink onClick={onClose} className="w-full" />
+          <Button href={navContent.cta.href} onClick={onClose} className="w-full">
+            {navContent.cta.label}
+          </Button>
+        </div>
+      </motion.div>
+    </>
   );
 };
