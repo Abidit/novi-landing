@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
-import { Manrope } from 'next/font/google';
+import localFont from 'next/font/local';
 import { MotionConfig } from 'framer-motion';
 import { heroContent } from '@/lib/content';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
+const plusJakarta = localFont({
+  src: './fonts/PlusJakartaSans-Variable.woff2',
+  variable: '--font-jakarta',
   display: 'swap',
+  weight: '200 800',
 });
 
 const title = `${SITE_NAME} — ${heroContent.headline}`;
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
-    <html lang="en" className={`${manrope.variable} h-full antialiased`}>
+    <html lang="en" className={`${plusJakarta.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <MotionConfig reducedMotion="user">{children}</MotionConfig>
       </body>

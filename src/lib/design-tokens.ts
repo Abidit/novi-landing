@@ -75,7 +75,6 @@ export const fontOptions: readonly FontOption[] = [
     variable: 'var(--font-sora)',
     vibe: 'Geometric, slightly bold/confident',
   },
-  { name: 'Manrope', variable: 'var(--font-manrope)', vibe: 'Warm, rounded, friendly' },
   {
     name: 'Plus Jakarta Sans',
     variable: 'var(--font-jakarta)',
