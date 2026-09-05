@@ -20,9 +20,9 @@ export const navContent = {
 };
 
 export const heroContent = {
-  headline: 'Run your team without the tab switching.',
+  headline: 'Run your team without the tab switching',
   subheading:
-    'Novi brings tasks, docs, and conversations into one calm workspace built for small, fast moving teams.',
+    'Novi brings tasks, docs, and conversations into one calm workspace built for small, fast-moving teams.',
   primaryCta: 'Start free',
   secondaryCta: 'See how it works',
 };
@@ -35,8 +35,7 @@ export interface Feature {
 
 export const featureSectionContent = {
   heading: 'Everything your team needs, nothing it doesn\u2019t',
-  subheading:
-    'Novi brings the essentials together so your team spends less time coordinating and more time building.',
+  subheading: 'Novi brings the essentials together — less coordinating, more building.',
 };
 
 export const features: Feature[] = [
@@ -53,7 +52,7 @@ export const features: Feature[] = [
   {
     icon: LuCalendarClock,
     title: 'One timeline for the whole team',
-    description: 'Every deadline and milestone in one shared view.',
+    description: 'See every deadline and milestone in one shared view.',
   },
   {
     icon: FiRefreshCw,
@@ -71,30 +70,30 @@ export interface HowItWorksStep {
 export const howItWorksContent = {
   heading: 'From idea to shipped, in one flow',
   subheading:
-    'No context switching between steps — just one workspace that moves with the work.',
+    'No context switching between steps — one workspace that moves with the work.',
   steps: [
     {
       icon: LuInbox,
       title: 'Capture',
-      description: 'Tasks and ideas land in one board, not six different tools.',
+      description: 'Collect tasks and ideas in one board, not six different tools.',
     },
     {
       icon: LuMessagesSquare,
       title: 'Discuss',
       description:
-        'Conversations stay attached to the work itself, not a separate inbox.',
+        'Keep conversations attached to the work itself, not a separate inbox.',
     },
     {
       icon: LuRocket,
       title: 'Ship',
       description:
-        'The whole team sees one timeline, so nothing falls through the cracks.',
+        'Share one timeline across the team, so nothing falls through the cracks.',
     },
   ] satisfies HowItWorksStep[],
 };
 
 export const ctaContent = {
-  heading: 'Get your team out of the tabs',
+  heading: 'Give your team one workspace',
   cta: 'Start free',
   disclaimer: 'No credit card required. Cancel anytime.',
 };
@@ -106,7 +105,7 @@ export interface FooterLinkGroup {
 
 export const footerContent = {
   name: 'Novi',
-  tagline: 'One calm workspace for fast-moving teams.',
+  tagline: "The workspace for teams who'd rather build than coordinate.",
   linkGroups: [
     {
       heading: 'Product',
