@@ -16,8 +16,13 @@ export const ThreadsDemo = () => {
 
   return (
     <div className="flex flex-col gap-2 rounded-lg bg-neutral-50 p-4">
-      <div className="max-w-[75%] rounded-lg rounded-bl-none border border-neutral-100 bg-white px-3 py-2 text-xs text-neutral-600 shadow-sm">
-        Can we push the launch banner live today?
+      <div className="flex items-end gap-2">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-100 text-[10px] font-semibold text-amber-700">
+          RS
+        </span>
+        <div className="max-w-[75%] rounded-lg rounded-bl-none border border-neutral-100 bg-white px-3 py-2 text-xs text-neutral-600 shadow-sm">
+          Can we push the launch banner live today?
+        </div>
       </div>
       <div className="flex justify-end">
         <AnimatePresence mode="wait">
@@ -34,7 +39,7 @@ export const ThreadsDemo = () => {
                   key={d}
                   animate={{ y: [0, -3, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity, delay: d * 0.15 }}
-                  className="h-3 w-1.5 rounded-full bg-indigo-400"
+                  className="h-3 w-1.5 rounded-full bg-indigo-500"
                 />
               ))}
             </motion.div>

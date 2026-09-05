@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { FiCheck } from 'react-icons/fi';
 
 const milestones = [
   { label: 'Design', pos: 10 },
@@ -9,12 +10,19 @@ const milestones = [
   { label: 'Launch', pos: 85 },
 ];
 
+const FILL_DURATION_S = 2.4;
+
 export const TimelineDemo = () => {
   const [progress, setProgress] = useState(0);
+  const [shipped, setShipped] = useState(false);
 
   useEffect(() => {
-    const id = setTimeout(() => setProgress(100), 200);
-    return () => clearTimeout(id);
+    const fillId = setTimeout(() => setProgress(100), 200);
+    const shipId = setTimeout(() => setShipped(true), 200 + FILL_DURATION_S * 1000);
+    return () => {
+      clearTimeout(fillId);
+      clearTimeout(shipId);
+    };
   }, []);
 
   return (
@@ -23,7 +31,7 @@ export const TimelineDemo = () => {
         <motion.div
           initial={{ width: '0%' }}
           animate={{ width: `${progress}%` }}
-          transition={{ duration: 2.4, ease: 'easeInOut' }}
+          transition={{ duration: FILL_DURATION_S, ease: 'easeInOut' }}
           className="absolute top-0 left-0 h-full rounded-full bg-indigo-600"
         />
         {milestones.map((m) => (
@@ -39,6 +47,16 @@ export const TimelineDemo = () => {
           </div>
         ))}
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: -4 }}
+        animate={shipped ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.3 }}
+        className="mt-7 flex items-center justify-end gap-1.5 text-[11px] font-medium text-emerald-600"
+      >
+        <FiCheck className="h-3 w-3" aria-hidden />
+        Shipped on time
+      </motion.div>
     </div>
   );
 };
