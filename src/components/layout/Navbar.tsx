@@ -98,12 +98,12 @@ export const Navbar = () => {
       }`}
     >
       <div className="mx-auto max-w-6xl px-6 py-4 lg:px-8">
-        {/* Desktop pill nav */}
+        {/* Desktop bar: logo left, nav + auth actions right */}
         <div className="hidden items-center justify-between md:flex">
-          <div className="flex items-center gap-6 rounded-full border border-neutral-200 py-2 pr-2 pl-5">
-            <NavLogo />
-            <span aria-hidden="true" className="h-5 w-px bg-neutral-200" />
-            <nav aria-label="Primary" className="flex items-center gap-6">
+          <NavLogo />
+
+          <div className="flex items-center gap-6">
+            <nav aria-label="Primary" className="flex items-center gap-7">
               {navContent.links.map((link) => (
                 <a
                   key={link.label}
@@ -114,13 +114,15 @@ export const Navbar = () => {
                 </a>
               ))}
             </nav>
-          </div>
 
-          <div className="flex items-center gap-3">
-            <SignInLink />
-            <Button href={navContent.cta.href} size="sm">
-              {navContent.cta.label}
-            </Button>
+            <span aria-hidden="true" className="h-5 w-px bg-neutral-200" />
+
+            <div className="flex items-center gap-3">
+              <SignInLink />
+              <Button href={navContent.cta.href} size="sm">
+                {navContent.cta.label}
+              </Button>
+            </div>
           </div>
         </div>
 

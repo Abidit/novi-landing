@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { howItWorksContent } from '@/lib/content';
 import { surfaceTint } from '@/lib/design-tokens';
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion';
@@ -19,6 +19,17 @@ export const HowItWorks = () => {
   });
 
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+
+  // Each Step's own `isActive` is cumulative (once reached, it stays
+  // highlighted — that's the intended checklist feel of the fill line), so
+  // multiple steps can be "active" at once. `aria-current="step"` must mark
+  // exactly one, so track "current" separately here, the same way
+  // FeatureScrollDesktop tracks a single activeIndex from scroll position.
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const rawIndex = useTransform(scrollYProgress, [0, 1], [0, steps.length - 1]);
+  useMotionValueEvent(rawIndex, 'change', (latest) => {
+    setCurrentIndex(Math.min(steps.length - 1, Math.max(0, Math.round(latest))));
+  });
 
   return (
     <section id="how-it-works" className={`scroll-mt-28 md:scroll-mt-20 ${surfaceTint}`}>
@@ -56,6 +67,9 @@ export const HowItWorks = () => {
                 threshold={i / steps.length}
                 scrollYProgress={scrollYProgress}
                 forceActive={prefersReducedMotion}
+                isCurrent={
+                  prefersReducedMotion ? i === steps.length - 1 : i === currentIndex
+                }
               />
             ))}
           </div>
