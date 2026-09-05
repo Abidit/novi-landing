@@ -30,12 +30,6 @@ export const HeroGraphic = () => {
           transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
           className="rounded-2xl border border-neutral-100 bg-white p-5 shadow-xl sm:p-6"
         >
-          <div className="mb-4 flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-          </div>
-
           <div
             role="tablist"
             aria-label="Workspace preview"
@@ -107,7 +101,7 @@ export const HeroGraphic = () => {
           scale: { duration: 0.5, delay: 1 },
           y: { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1.5 },
         }}
-        className="absolute -top-3 left-2 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-lg sm:top-6 sm:-left-10"
+        className="absolute -top-4 left-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-lg sm:-left-10"
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-amber-600">
           <LuSparkles className="h-3.5 w-3.5" aria-hidden />
@@ -124,7 +118,7 @@ export const HeroGraphic = () => {
           scale: { duration: 0.5, delay: 1.2 },
           y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.7 },
         }}
-        className="absolute right-2 bottom-10 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-lg sm:-right-8"
+        className="absolute right-3 -bottom-4 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-lg sm:-right-8 sm:bottom-10"
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
           <FiMessageCircle className="h-3.5 w-3.5" aria-hidden />
