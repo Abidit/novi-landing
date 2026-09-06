@@ -211,7 +211,7 @@ const BoardsView = () => (
   <div className="grid grid-cols-3 gap-2 sm:gap-3">
     {BOARD_COLUMNS.map((column) => (
       <div key={column.name} className="space-y-2 rounded-lg bg-neutral-100 p-2">
-        <p className="px-0.5 text-[11px] font-medium text-neutral-400">{column.name}</p>
+        <p className="px-0.5 text-[11px] font-medium text-neutral-600">{column.name}</p>
         {column.cards.map((card) => (
           <div key={card.title} className={taskCard}>
             {card.chip && (
@@ -224,7 +224,7 @@ const BoardsView = () => (
             <p
               className={`truncate text-xs font-medium ${
                 card.done
-                  ? 'text-neutral-400 line-through decoration-neutral-300'
+                  ? 'text-neutral-500 line-through decoration-neutral-300'
                   : 'text-neutral-700'
               }`}
             >
@@ -238,7 +238,7 @@ const BoardsView = () => (
               </div>
             )}
             {card.done && (
-              <span className="mt-1.5 flex items-center gap-1 text-[9px] font-medium text-emerald-600">
+              <span className="mt-1.5 flex items-center gap-1 text-[9px] font-medium text-emerald-700">
                 <LuCheck className="h-2.5 w-2.5" aria-hidden />
                 Done
               </span>
@@ -275,7 +275,7 @@ const ThreadsView = () => (
           RS
         </span>
         <span className="text-xs font-semibold text-neutral-800">Riya S.</span>
-        <span className="text-[10px] text-neutral-400">· on line 41</span>
+        <span className="text-[10px] text-neutral-500">· on line 41</span>
       </div>
       <p className="text-xs leading-relaxed text-neutral-600">
         <code className="rounded bg-neutral-100 px-1 py-0.5 text-[11px] text-neutral-700">
@@ -287,13 +287,12 @@ const ThreadsView = () => (
         </code>
         .
       </p>
-      <button
-        type="button"
-        className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-neutral-200 px-2 py-1 text-[11px] font-medium text-neutral-600 transition-colors hover:border-indigo-500/50 hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
-      >
+      {/* Illustrative affordance only — the demo panel is a non-interactive
+          preview, so this is not a real (focusable) control. */}
+      <span className="mt-1 inline-flex items-center gap-1 self-start rounded-md border border-neutral-200 px-2 py-1 text-[11px] font-medium text-neutral-600">
         Reply in thread
         <LuArrowRight className="h-3 w-3" aria-hidden />
-      </button>
+      </span>
     </div>
   </div>
 );
@@ -381,9 +380,9 @@ const ImportsView = () => {
                 <p className="truncate text-xs font-semibold text-neutral-700">
                   {source.name}
                 </p>
-                <p className="truncate text-[10px] text-neutral-400">{source.detail}</p>
+                <p className="truncate text-[10px] text-neutral-500">{source.detail}</p>
               </div>
-              <LuCheck className="h-3.5 w-3.5 shrink-0 text-emerald-500" aria-hidden />
+              <LuCheck className="h-3.5 w-3.5 shrink-0 text-emerald-600" aria-hidden />
             </motion.div>
           ))}
         </div>
@@ -392,13 +391,13 @@ const ImportsView = () => {
           <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-sm font-bold text-white">
             N
           </span>
-          <span className="text-[10px] font-medium text-neutral-400">Novi</span>
+          <span className="text-[10px] font-medium text-neutral-500">Novi</span>
         </div>
       </div>
       <div className="rounded-lg border border-neutral-200 bg-white p-2.5">
         <div className="flex items-center justify-between text-[10px] font-medium text-neutral-500">
           <span>Importing 128 tasks</span>
-          <span className="text-emerald-600">100%</span>
+          <span className="text-emerald-700">100%</span>
         </div>
         <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-neutral-100">
           <motion.div
@@ -466,7 +465,7 @@ const DemoFrame = ({
       <span className="h-3 w-3 rounded-full bg-red-400" />
       <span className="h-3 w-3 rounded-full bg-yellow-400" />
       <span className="h-3 w-3 rounded-full bg-green-400" />
-      <span className="ml-2 text-xs font-medium text-neutral-400">{label}</span>
+      <span className="ml-2 text-xs font-medium text-neutral-500">{label}</span>
     </div>
     <div className="min-h-0 flex-1 overflow-auto bg-neutral-50 p-4 sm:p-5">
       {children}
@@ -502,14 +501,20 @@ const StageDesktop = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [activeTab, setActiveTab] = useState<StageTabId>('boards');
   const [isPaused, setIsPaused] = useState(false);
+  const [autoStopped, setAutoStopped] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const activeIndex = STAGE_ITEMS.findIndex((item) => item.id === activeTab);
   const activeItem = STAGE_ITEMS[activeIndex];
-  const autoplay = !prefersReducedMotion && !isPaused;
+  const autoplay = !prefersReducedMotion && !autoStopped && !isPaused;
 
-  // Cycle through the tabs on a fixed loop; any tab change (auto or manual)
-  // resets the timer via the `activeTab` dependency.
+  // WCAG 2.2.2: give the user a real way to halt the auto-advance. Hover or
+  // focus pauses it (and releases); explicitly picking a tab latches it off
+  // for the session. Reduced motion never starts it at all.
+  const stopAutoplay = () => setAutoStopped(true);
+
+  // Cycle through the tabs on a fixed loop until paused/stopped; each tab
+  // change resets the timer via the `activeTab` dependency.
   useEffect(() => {
     if (!autoplay) return;
     const timer = window.setTimeout(() => {
@@ -523,6 +528,7 @@ const StageDesktop = () => {
 
   const selectTabAt = (index: number) => {
     const next = (index + STAGE_ITEMS.length) % STAGE_ITEMS.length;
+    stopAutoplay();
     setActiveTab(STAGE_ITEMS[next].id);
     tabRefs.current[next]?.focus();
   };
@@ -582,9 +588,12 @@ const StageDesktop = () => {
               aria-selected={isActive}
               aria-controls={`${uid}-panel`}
               tabIndex={isActive ? 0 : -1}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                stopAutoplay();
+                setActiveTab(item.id);
+              }}
               onKeyDown={onTabKeyDown}
-              className="relative flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
+              className="relative flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50 focus-visible:outline-none"
             >
               {isActive && (
                 <motion.span

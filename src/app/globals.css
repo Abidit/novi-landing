@@ -14,3 +14,16 @@ body {
   color: var(--foreground);
   font-family: var(--font-jakarta), Arial, Helvetica, sans-serif;
 }
+
+/*
+  Focus indicators across the app are built from Tailwind's `ring` utility,
+  which renders as `box-shadow` — and box-shadow is dropped in forced-colors
+  mode (Windows High Contrast). Components also set `outline-none`, so those
+  users would get no visible focus at all. Restore a real outline there.
+*/
+@media (forced-colors: active) {
+  *:focus-visible {
+    outline: 3px solid Highlight !important;
+    outline-offset: 2px !important;
+  }
+}

@@ -65,12 +65,12 @@ export const Footer = () => {
               {footerContent.linkGroups.map((group) => (
                 <motion.div key={group.heading} variants={item}>
                   <h3 className="text-sm font-semibold text-white">{group.heading}</h3>
-                  <ul className="mt-4 space-y-3">
+                  <ul className="mt-3 space-y-1">
                     {group.links.map((link) => (
                       <li key={link.label}>
                         <a
                           href={link.href}
-                          className={`inline-block rounded-sm text-sm text-neutral-400 transition duration-200 hover:-translate-y-px hover:text-white ${focusRing}`}
+                          className={`block rounded-sm py-1.5 text-sm text-neutral-400 transition duration-200 hover:-translate-y-px hover:text-white ${focusRing}`}
                         >
                           {link.label}
                         </a>

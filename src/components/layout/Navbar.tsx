@@ -108,7 +108,7 @@ export const Navbar = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative rounded-sm pb-0.5 text-sm font-medium text-neutral-600 transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-indigo-600 after:transition-transform after:duration-300 after:content-[''] hover:text-neutral-900 hover:after:scale-x-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:after:scale-x-100"
+                  className="relative -my-1 rounded-sm py-1 text-sm font-medium text-neutral-600 transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-indigo-600 after:transition-transform after:duration-300 after:content-[''] hover:text-neutral-900 hover:after:scale-x-100 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none focus-visible:after:scale-x-100"
                 >
                   {link.label}
                 </a>

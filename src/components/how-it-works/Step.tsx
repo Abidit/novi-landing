@@ -49,7 +49,7 @@ export const Step = ({
       type="button"
       onClick={handleActivate}
       aria-current={isCurrent ? 'step' : undefined}
-      className="relative flex w-full gap-5 rounded-lg pb-10 text-left last:pb-0 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none"
+      className="relative flex w-full gap-5 rounded-lg pb-10 text-left last:pb-0 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-50 focus-visible:outline-none"
     >
       <span
         className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${

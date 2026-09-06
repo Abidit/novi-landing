@@ -56,9 +56,18 @@ export const NewsletterForm = () => {
   const feedback =
     status === 'invalid'
       ? 'Enter a valid email address.'
+      : status === 'submitting'
+        ? 'Sending your subscription…'
+        : status === 'success'
+          ? "You're in — check your inbox to confirm."
+          : '';
+
+  const feedbackTone =
+    status === 'invalid'
+      ? 'text-red-700'
       : status === 'success'
-        ? "You're in — check your inbox to confirm."
-        : '';
+        ? 'text-emerald-700'
+        : 'text-neutral-600';
 
   return (
     <form
@@ -81,9 +90,9 @@ export const NewsletterForm = () => {
           disabled={isBusy}
           aria-invalid={status === 'invalid'}
           aria-describedby={feedback ? feedbackId : undefined}
-          className={`h-11 w-full rounded-lg border bg-white px-4 text-sm text-neutral-900 placeholder-neutral-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 ${
+          className={`h-11 w-full rounded-lg border bg-white px-4 text-sm text-neutral-900 placeholder-neutral-500 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 ${
             status === 'invalid'
-              ? 'border-red-400 focus-visible:ring-red-400'
+              ? 'border-red-500 focus-visible:ring-red-500'
               : 'border-neutral-300 focus:border-indigo-500 focus-visible:ring-indigo-500'
           }`}
         />
@@ -102,7 +111,10 @@ export const NewsletterForm = () => {
                 transition={{ duration: 0.2 }}
                 className="flex items-center gap-2"
               >
-                <FiLoader className="h-4 w-4 animate-spin" aria-hidden="true" />
+                <FiLoader
+                  className="h-4 w-4 animate-spin motion-reduce:animate-none"
+                  aria-hidden="true"
+                />
                 Sending
               </motion.span>
             ) : status === 'success' ? (
@@ -134,12 +146,8 @@ export const NewsletterForm = () => {
         </button>
       </div>
 
-      <div id={feedbackId} aria-live="polite">
-        {feedback && (
-          <span className={status === 'invalid' ? 'text-red-600' : 'text-emerald-600'}>
-            {feedback}
-          </span>
-        )}
+      <div id={feedbackId} role="status" aria-live="polite" aria-atomic="true">
+        {feedback && <span className={feedbackTone}>{feedback}</span>}
       </div>
     </form>
   );

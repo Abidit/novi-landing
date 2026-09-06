@@ -34,7 +34,7 @@ export const CtaBand = () => {
         <motion.div variants={item} className="mx-auto mt-8 flex max-w-md justify-center">
           <NewsletterForm />
         </motion.div>
-        <motion.p variants={item} className="mt-4 text-sm text-neutral-500">
+        <motion.p variants={item} className="mt-4 text-sm text-neutral-600">
           {ctaContent.disclaimer}
         </motion.p>
       </motion.div>

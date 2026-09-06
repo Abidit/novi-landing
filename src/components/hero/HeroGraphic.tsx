@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiCheck, FiMessageCircle } from 'react-icons/fi';
 import { LuSparkles } from 'react-icons/lu';
@@ -14,7 +14,37 @@ const panelVariants = {
 
 export const HeroGraphic = () => {
   const [active, setActive] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tab = heroPreviewTabs[active];
+
+  const focusTab = (index: number) => {
+    const next = (index + heroPreviewTabs.length) % heroPreviewTabs.length;
+    setActive(next);
+    tabRefs.current[next]?.focus();
+  };
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        event.preventDefault();
+        focusTab(active + 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        event.preventDefault();
+        focusTab(active - 1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        focusTab(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        focusTab(heroPreviewTabs.length - 1);
+        break;
+    }
+  };
 
   return (
     <div className="relative mx-auto w-full max-w-lg">
@@ -33,6 +63,7 @@ export const HeroGraphic = () => {
           <div
             role="tablist"
             aria-label="Workspace preview"
+            aria-orientation="horizontal"
             className="mb-4 flex gap-1 rounded-lg bg-neutral-100 p-1"
           >
             {heroPreviewTabs.map((t, i) => {
@@ -40,16 +71,21 @@ export const HeroGraphic = () => {
               return (
                 <button
                   key={t.id}
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
                   type="button"
                   role="tab"
                   id={`hero-tab-${t.id}`}
                   aria-selected={selected}
                   aria-controls={`hero-panel-${t.id}`}
+                  tabIndex={selected ? 0 : -1}
                   onClick={() => setActive(i)}
-                  className={`flex min-w-0 flex-1 items-center justify-center gap-1 rounded-md px-1.5 py-1.5 text-[11px] font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none ${
+                  onKeyDown={handleTabKeyDown}
+                  className={`flex min-w-0 flex-1 items-center justify-center gap-1 rounded-md px-1.5 py-2 text-[11px] font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none ${
                     selected
                       ? 'bg-white text-neutral-900 shadow-sm'
-                      : 'text-neutral-500 hover:text-neutral-800'
+                      : 'text-neutral-600 hover:text-neutral-900'
                   }`}
                 >
                   <t.icon aria-hidden className="size-3.5 shrink-0" />
@@ -65,12 +101,13 @@ export const HeroGraphic = () => {
               role="tabpanel"
               id={`hero-panel-${tab.id}`}
               aria-labelledby={`hero-tab-${tab.id}`}
+              tabIndex={0}
               variants={panelVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
               transition={{ duration: 0.2 }}
-              className="space-y-3"
+              className="space-y-3 rounded-md focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none"
             >
               {tab.items.map((row) => (
                 <div

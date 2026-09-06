@@ -18,8 +18,6 @@ export const HowItWorks = () => {
     offset: ['start center', 'end center'],
   });
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-
   // Each Step's own `isActive` is cumulative (once reached, it stays
   // highlighted — that's the intended checklist feel of the fill line), so
   // multiple steps can be "active" at once. `aria-current="step"` must mark
@@ -38,7 +36,7 @@ export const HowItWorks = () => {
           <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl lg:text-4xl">
             {heading}
           </h2>
-          <p className="mt-4 text-base text-neutral-500 sm:text-lg">{subheading}</p>
+          <p className="mt-4 text-base text-neutral-600 sm:text-lg">{subheading}</p>
         </div>
 
         <div ref={containerRef} className="relative mx-auto max-w-xl">
@@ -54,8 +52,8 @@ export const HowItWorks = () => {
           ) : (
             <motion.div
               aria-hidden="true"
-              style={{ height: lineHeight }}
-              className="absolute top-1 left-5 w-px bg-indigo-600"
+              style={{ scaleY: scrollYProgress }}
+              className="absolute top-1 bottom-1 left-5 w-px origin-top bg-indigo-600"
             />
           )}
 
