@@ -969,11 +969,12 @@ export const FeatureCommandBento = () => {
 
       <CommandStage />
 
-      {/* <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
+      {/* <div className="d-none grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3"> */}
+      <div className="hidden">
         <LauncherCard />
         <ThreadResolverCard />
         <ViewSwitcherCard />
-      </div> */}
+      </div>
     </section>
   );
 };
