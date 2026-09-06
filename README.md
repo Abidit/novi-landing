@@ -80,18 +80,54 @@ Targeted WCAG 2.2 AA throughout, specifically:
 - Visible `focus-visible` rings on every interactive element, checked against both light and dark backgrounds (the footer's dark background needed a different ring treatment than the rest of the light page)
 - Full keyboard navigation, including a real focus trap in the mobile menu (focus can't escape to the page behind it while open, and returns to the hamburger button on close)
 - The newsletter signup's submission feedback is announced via `aria-live`, not just shown as a visual icon swap
-- 44×44px minimum tap targets on all mobile interactive elements
+- Tap targets meet WCAG 2.2 AA (SC 2.5.8 — 24×24 CSS px minimum, with adequate spacing); primary controls (nav, mobile menu, social links) are a full 44×44
+- Focus indicators also survive Windows High Contrast / forced-colors mode, where `box-shadow`-based rings are dropped
+
+A late dedicated pass re-verified all of the above and computed every text/background pair against the _compiled_ Tailwind v4 color values (the v4 palette differs materially from v3 — e.g. `indigo-500` is `#625fff`, not `#6366f1`). Contrast: all checked pairs pass. See **Known trade-offs** for what that pass could not verify.
 
 ---
 
 ## Known trade-offs
 
-- No real authentication — "Sign in" is a placeholder link, as the brief didn't call for a working account system
-- No CMS or backend — content lives in a single typed `content.ts` file, appropriate for a single static page
--
+**Product scope**
+
+- No real authentication — "Sign in" and the CTA buttons are placeholder links, as the brief didn't call for a working account system.
+- No CMS or backend — content lives in a single typed `content.ts`, appropriate for one static page. The command-center feature section still has some demo copy hardcoded in the component; it should move into `content.ts` too.
+- Every in-section demo is illustrative and claim-free — no real metrics, customer names, or ratings.
+
+**Design system vs. the brief**
+
+- The feature-section brief specified a `slate` / `purple` / dark-mode treatment. Novi's actual system is `neutral` / `indigo-600` (the same `#4F46E5` the brief quoted) and light-only, so I built to the real system and dropped the `dark:` variants — this Tailwind v4 setup defines no dark variant, so they would have been inert.
+- "Glass / elevated" cards became plain white + border + a soft indigo-tinted shadow. A translucent blur over an all-white page produces no visible glass.
+
+**Command-center feature section**
+
+- The desktop stage panel uses a fixed height tuned to the current demo content; a demo that outgrew it would scroll rather than clip.
+- Demos render on both breakpoints via CSS `hidden` (four mobile instances + one desktop instance mounted at once, a few with looping CSS animations running offscreen). Consistent with the rest of the site's mobile/desktop split, but a media-query-gated render would be leaner.
+- The auto-advancing tabs pause on hover/focus and stop permanently once a tab is chosen (WCAG 2.2.2). Practical effect: a mouse user reading the page usually stops seeing rotation after roughly one cycle. There is no visible pause/play button — that would be an added control.
+- A parked "Tier 2" bento grid remains in the component behind `display:none`: no accessibility impact (removed from the tree and tab order), but dead bundle weight. It should be finished or deleted.
+
+**Accessibility pass**
+
+- The final pass was verified by code review plus a hand-rolled WCAG contrast script against the compiled Tailwind values — **not** by a real browser tab-through, a screen reader (VoiceOver/NVDA), or a DevTools Performance capture; no browser tooling was available in that session. Automated `axe`/Lighthouse in CI and real AT testing are the clear next step.
+- `yarn lint` reports two warnings, both in `Demos/BoardsDemo.tsx` — part of the earlier `FeatureShowcase` implementation that the command-center section replaced on the page. That tree is no longer rendered and should be removed rather than carried; it was left untouched to keep the pass scoped to live code.
+- The newsletter input's **resting** border is below 3:1 non-text contrast. Its focus and error states are compliant and the field is identifiable by fill, placeholder, label, and form context, so this is left as a documented borderline rather than forcing a heavier border.
+- Several of the quietest demo labels were darkened one step (`neutral-400` → `500`/`600`, `emerald-600` → `700`) to clear 4.5:1 — the lowest tier of the visual hierarchy is now marginally louder than originally drawn.
 
 ---
 
 ## Notes on process
 
 This was built iteratively — background/design direction, footer, hero, features, and copy were each explored with a few visual options before committing, rather than implementing a first idea straight through. A few things I'd do differently with more time:
+
+- **Semantic color tokens.** Secondary/muted text, focus-ring offsets, and feedback colors are still raw Tailwind classes (`text-neutral-500`, `ring-offset-indigo-50`, `text-red-700`) applied per component. Promoting them to named tokens in `design-tokens.ts` would make the next contrast check a config change instead of a file-by-file audit.
+- **Automated accessibility in CI** — `@axe-core/playwright` or Lighthouse on every build, plus real screen-reader and physical-device touch passes, rather than static verification.
+- **One reduced-motion mechanism.** It's currently spread across a global `MotionConfig`, a `usePrefersReducedMotion` hook, conditional Framer props, and Tailwind `motion-reduce:` — consolidating would make it easier to trust.
+- **Remove the superseded Features implementation.** `FeatureShowcase` / `FeatureScrollDesktop` / `FeatureListMobile` / `Demos/*` are still in the repo after the command-center section replaced them on the page.
+- **Finish or delete the parked bento grid** instead of leaving it behind `display:none`.
+- **Move the command-center demo copy into `content.ts`** for consistency with every other section.
+- **A visible pause/play control** for the auto-advancing tabs, rather than relying on hover/focus + stop-on-interaction.
+- **Interaction tests** (Testing Library) for the three tablist keyboard models and the newsletter state machine.
+- **Verify the 60fps target** with an actual DevTools / WebPageTest trace on a mid-tier device.
+
+> Note: the **Interaction and animation decisions** section above still describes the earlier sticky-panel Features implementation. The live page now uses the command-center section (four-tab stage with a feature-beside-demo layout, an auto-advancing progress indicator, and a linear stack on mobile); that prose is due a refresh.
