@@ -1,65 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Novi — Landing Page
 
-## Getting Started
+A responsive landing page for **Novi**, a project and task management tool for small, fast-moving teams. Built as a frontend/design assessment.
 
-First, run the development server:
+**Live preview:** [[LIVE](https://novi-landing-five.vercel.app/)]
+
+**Repository:** [[GITHUB](https://github.com/Abidit/novi-landing/)]
+
+---
+
+## Running the project locally
 
 ```bash
-npm run dev
-# or
+git clone <your-repo-url>
+cd novi-landing
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+yarn build   # production build
+yarn lint    # ESLint check
+yarn start   # run the production build locally
+```
 
-## Learn More
+The project uses Husky + lint-staged, so `eslint --fix` and `prettier --write` run automatically on every commit — no manual formatting step needed.
 
-To learn more about Next.js, take a look at the following resources:
+**Requirements:** Node 18+, Yarn.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech stack
 
-## Deploy on Vercel
+- **Next.js (App Router)** + **TypeScript**
+- **Tailwind CSS** for styling
+- **Framer Motion** for animation and scroll-linked interactions
+- **Plus Jakarta Sans**, self-hosted via `next/font/local` (no external Google Fonts request at build or runtime)
+- **ESLint + Prettier + Husky + lint-staged** for enforced code quality on commit
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+No backend, CMS, or state management library — the brief didn't call for one, and adding one would have been unnecessary weight for a single static page.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
 
-## Responsive & accessibility audit notes
+## Design decisions
 
-A mobile-first pass was run across the whole page at 375px, 640px, 768px, 1024px, and 1280px (Chromium via Playwright, plus manual keyboard/reduced-motion checks) before finalizing. Findings below.
+**Visual direction.** The brief asked for something that "feels like a modern tool a small team would trust" — I aimed for calm and understated rather than loud, since the target users (startups, agencies, small product/design teams) are closer to Linear or Notion's audience than a consumer app's. That shaped most of what follows: a single indigo accent color, generous whitespace, and restraint over decoration.
 
-**Fixed**
+**Typography.** I tested several candidates (Inter, Geist, Manrope, DM Sans, Plus Jakarta Sans) side-by-side in a small comparison tool before deciding, rather than picking from a font list. Plus Jakarta Sans won on balancing "business-credible" and "approachable" better than the alternatives — Inter felt too generic/default, Manrope slightly too soft at headline weight. It's self-hosted rather than loaded from Google Fonts so the build has no external font dependency.
 
-- **Horizontal scroll at 375px**: `HeroGraphic`'s decorative blurred blob (`-inset-8`) bled 8px past the viewport on both edges once the section's own `px-6` padding was accounted for — the earlier fix only addressed the floating chips, not the background blob. Added `overflow-x-clip` to the Hero section, plus `overflow-x: clip` on `html` as a project-wide backstop. Verified 0px overflow at all five widths afterward.
-- **Tap targets under 44px on mobile**: navbar hamburger (36→44px), the shared `Button` component (added a `min-h-11` floor so both CTA sizes clear 44px without changing the type scale), footer social icons (36→44px), the newsletter email input and submit button (42→44px), and the footer bottom-bar Privacy/Terms links (given `py-3 -my-3` so the hit area grows without changing their visual position or the row's height). Footer's four link-group columns (Product/Company/Resources/Legal) were intentionally left at their current density — they weren't named in the audit scope and padding them to 44px would have roughly doubled the footer's height for a non-primary nav.
-- **Sub-14px text on mobile**: `FeatureShowcase` card descriptions (12→14px), the footer bottom bar's copyright and Privacy/Terms text (12→14px), and the CTA band's disclaimer line (12→14px). Left the intentionally tiny (11–12px) labels inside the `Demos/*` mockups alone — those are chrome inside a miniature "screenshot of a product UI," not primary page copy, and bumping them to 14px broke the mockup's proportions and caused label wrapping inside the ~85px-wide board columns at 375px.
-- **Font not actually applying**: `globals.css` hardcoded `font-family: Arial, Helvetica, sans-serif` on `body`, silently overriding the Manrope variable font wired up in `layout.tsx`. Fixed to reference `var(--font-manrope)` first.
-- **Section rhythm drift**: the CTA band used `py-16 sm:py-20` while `HowItWorks` and `FeatureShowcase` both use `py-20 sm:py-24` for the same visual weight. Normalized the CTA band to match. Horizontal page padding (`px-6 lg:px-8`) was already consistent across every section.
-- **Sticky navbar covering anchor targets**: `#how-it-works` and `#features` had no scroll offset, so anchor-jumping (from the Hero CTA or the navbar links) landed their headings partially behind the 69px sticky navbar. Added `scroll-mt-20` to both section roots; anchor scrolls now land ~11px clear of the navbar.
-- **Reduced motion was only partially handled**: `HowItWorks`'s scroll-linked line fill and `FeatureShowcase`'s auto-cycle already had manual `prefers-reduced-motion` checks, but Hero's entrance stagger and `HeroGraphic`'s infinite floating-chip loops did not. Wrapped the app in Framer Motion's `<MotionConfig reducedMotion="user">` (in `layout.tsx`) so every `animate`/`whileInView`/`layoutId` transition project-wide degrades to its end state automatically, without scattering manual checks through every component. Also switched `FeatureShowcase`'s one-shot `matchMedia` check over to the same `usePrefersReducedMotion` hook `HowItWorks` already used, so there's one shared, reactive source of truth instead of two different detection strategies.
-- **Navbar completeness**: added `aria-expanded`/`aria-controls` to the mobile menu toggle (was missing entirely), gave the mobile panel an `id` to match, and fixed the mobile "Try for FREE" button not closing the menu on click — plus a small `Button` component bug where `onClick` was silently dropped whenever `href` was also passed (the `Link` branch never forwarded it).
-- **Dead code**: removed `featuresSection.tsx` and `FeatureCard.tsx` (superseded by `FeatureShowcase`, already commented out in `page.tsx`), the resulting unused import in `page.tsx`, and an unused `use` import in `FontComparison.tsx`. `yarn lint` and `yarn build` are both clean with zero warnings.
+**Section backgrounds.** Rather than a flat white page throughout, sections alternate between white and a soft indigo tint, which gives visual separation between sections without needing hard divider lines. The Hero additionally has a faint dot-grid texture with one soft off-center glow — deliberately restricted to the Hero only, so it reads as a considered accent rather than a repeated decoration.
 
-**Verified working, no change needed**
+**Footer wordmark.** The footer closes with an oversized "Novi" wordmark rendered in a shade barely lighter than the footer's own background — a quiet closing brand moment rather than a loud one, consistent with the calm direction. It's marked `aria-hidden`, since it's decorative and the brand name is already announced properly earlier in the footer.
 
-- `HowItWorks`'s `useScroll`/`useTransform` line-fill and per-step activation are purely scroll-_position_-driven (not time-based), so fast-flick mobile scrolling doesn't skip or mis-time the fill — confirmed this holds regardless of scroll speed.
-- `FeatureShowcase` tabs are native `<button>` elements, so Tab focus + Enter/Space activation, and `aria-selected` updates, already worked correctly without changes; manual tab clicks cleanly reset the auto-cycle timer and progress bar with no visual glitch.
-- Anchor IDs (`#how-it-works`, `#features`) were already on the actual `<section>` roots, not wrapper divs.
-- The newsletter checkmark micro-interaction and its 2.2s reset work correctly.
+---
 
-**Known limitations / trade-offs**
+## Interaction and animation decisions
 
-- The navbar's "Pricing" link and several footer link-group items (`href="#"`) don't point at real sections — there's no pricing page in this build, so they're inert placeholders by design, not a bug.
-- Footer link-group tap targets (as opposed to the social icons and bottom-bar links) remain under 44px tall on mobile; expanding them was out of this pass's named scope and would have visibly changed the footer's proportions.
-- The floating "N" badge visible in some screenshots during this audit is Next.js's own dev-mode indicator (confirmed absent from a production `next build && next start`), not part of the page.
+**Hero.** Headline/subhead/CTAs stagger in on load. The supporting graphic is a small mock product UI (not a stock photo) with two floating status chips that gently loop — meant to actually suggest the product rather than illustrate it abstractly.
+
+**"How it works" section** (not in the original brief — added as one of the ways I went beyond the core requirements). A three-step workflow (Capture → Discuss → Ship) with a connecting line that fills in sync with scroll position, using Framer Motion's `useScroll`/`useTransform`. This is scroll-_driven_, not time-based — the animation is a direct function of where the user actually is on the page.
+
+**Features section.** This went through the most iteration. The final version:
+
+- **Desktop:** a sticky demo panel pinned in the viewport while feature descriptions scroll past on the left; each feature becomes "active" as it crosses the vertical center of the screen, and the panel cross-fades between four small live demos (a kanban card sliding between columns, a chat thread resolving from typing to sent, a timeline sweeping through milestones, and external tools consolidating into Novi).
+- **Mobile:** intentionally a _different_, simpler implementation — a serial stack of feature-text-then-its-demo, with no sticky positioning or scroll-linked state. Scroll-pinned layouts are meaningfully less reliable on mobile browsers (viewport height changes as address bars collapse, sticky positioning behaves inconsistently), so rather than forcing one mechanism to work everywhere, mobile gets its own straightforward version.
+
+**Reduced motion.** Every scroll-linked or auto-advancing animation on the site (the How-it-works fill, the Features scroll-swap, autoplay progress indicators) checks `prefers-reduced-motion` and falls back to a fully visible static state — not just a slower animation, but genuinely no motion for users who've asked for that.
+
+---
+
+## Accessibility
+
+Targeted WCAG 2.2 AA throughout, specifically:
+
+- Text/background color pairs checked against 4.5:1 (normal text) / 3:1 (large text) contrast ratios
+- Visible `focus-visible` rings on every interactive element, checked against both light and dark backgrounds (the footer's dark background needed a different ring treatment than the rest of the light page)
+- Full keyboard navigation, including a real focus trap in the mobile menu (focus can't escape to the page behind it while open, and returns to the hamburger button on close)
+- The newsletter signup's submission feedback is announced via `aria-live`, not just shown as a visual icon swap
+- 44×44px minimum tap targets on all mobile interactive elements
+
+---
+
+## Known trade-offs
+
+- No real authentication — "Sign in" is a placeholder link, as the brief didn't call for a working account system
+- No CMS or backend — content lives in a single typed `content.ts` file, appropriate for a single static page
+-
+
+---
+
+## Notes on process
+
+This was built iteratively — background/design direction, footer, hero, features, and copy were each explored with a few visual options before committing, rather than implementing a first idea straight through. A few things I'd do differently with more time:
