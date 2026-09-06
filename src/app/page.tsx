@@ -1,4 +1,4 @@
-import { FeatureShowcase } from '@/components/features/FeatureShowcase';
+import { FeatureCommandBento } from '@/components/sections/FeatureCommandBento';
 import { Footer } from '@/components/footer/Footer';
 import { Hero } from '@/components/hero/Hero';
 import { HowItWorks } from '@/components/how-it-works/HowItWorks';
@@ -33,7 +33,7 @@ const Home = () => {
       <main>
         <Hero />
         <HowItWorks />
-        <FeatureShowcase />
+        <FeatureCommandBento />
       </main>
       <Footer />
     </>

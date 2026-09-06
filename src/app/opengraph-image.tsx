@@ -9,7 +9,7 @@ import { SITE_NAME, BRAND_INDIGO_600 } from '@/lib/site';
 // (Fluid Compute on Vercel) has no cold-start penalty that would justify edge,
 // so plain Node.js is both the modern-correct and the faster choice here.
 
-export const alt = `${SITE_NAME} — ${heroContent.headline}`;
+export const alt = `${SITE_NAME} | ${heroContent.headline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

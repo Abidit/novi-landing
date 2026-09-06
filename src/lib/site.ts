@@ -1,5 +1,5 @@
 // Placeholder production URL — replace with the real deployed domain once available.
-export const SITE_URL = 'https://novi-landing.vercel.app';
+export const SITE_URL = 'https://novi-landing-five.vercel.app';
 
 export const SITE_NAME = 'Novi';
 
