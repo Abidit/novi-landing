@@ -48,7 +48,9 @@ export const Navbar = () => {
       body.style.left = '';
       body.style.right = '';
       body.style.overflow = '';
-      window.scrollTo(0, scrollY);
+      // Explicit `instant`: the page-level `scroll-behavior: smooth` would
+      // otherwise animate this restore from the top back down on iOS Safari.
+      window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' });
     };
   }, [open]);
 

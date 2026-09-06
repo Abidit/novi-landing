@@ -963,8 +963,8 @@ const ViewSwitcherCard = () => {
 export const FeatureCommandBento = () => {
   return (
     <section
-      id="command-center"
-      className="mx-auto max-w-7xl scroll-mt-28 px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
+      id="features"
+      className="mx-auto max-w-7xl scroll-mt-16 px-4 py-16 sm:px-6 sm:py-28 lg:px-8"
     >
       <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
         <h2 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
